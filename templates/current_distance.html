@@ -1,0 +1,29 @@
+<html>
+<head>
+  <title>planetary distances (in light minutes)</title>
+<style type="text/css">
+  body {
+    color: #000000;
+    background-color: #fffffe;
+ }
+
+  p {
+    font-face: helvetica;
+    font-weight: 100;
+    font-size: 48px;
+    line-height: 48px;
+    margin: 0;
+  }
+  
+  p span.symbol {
+    padding-right: 20px;
+    border-right: 1px solid black;
+  }
+</style>
+</head>
+<body>
+{% for planet in planets %}
+  <p><span class="symbol">{{ planet.symbol}}</span> {{ planet.distance|round(2) }}</p>
+{% endfor %}
+</body>
+</html>

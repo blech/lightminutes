@@ -3,24 +3,32 @@
 import ephem
 import datetime
 
+# ideally this would be a config option
+years = 5
+
 now = datetime.datetime.now()
 
 planets = list(("Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"))
 
 # convert name to object
 for (index, name) in enumerate(planets):
-    planets[index] = getattr(ephem, name)()
-    
+    planets[index] = getattr(ephem, name)(now)
+
+# build a useful constant
 lm = ephem.meters_per_au/ephem.c/60 # conversion factor from AU to lightminutes
 
+for planet in planets:
+    print "%s: %.2f" % (planet.name, planet.earth_distance*lm)
+
+# previous order
 order = list()
 
-years = 5
-
+# the main loop
 i = 0
 while (i<365*years):
   next = now+datetime.timedelta(days=i)
 
+  # find distances
   [planet.compute(next) for planet in planets]
   distances = sorted([(planet.earth_distance*lm, planet) for planet in planets])
 
@@ -34,5 +42,4 @@ while (i<365*years):
       print ""
 
   order = new_order
-
   i += 1
