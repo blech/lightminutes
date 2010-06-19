@@ -32,6 +32,19 @@ output = list()
 for (index, planet) in enumerate(planets):
   output.append({'planet': planet, 'distance': planet.earth_distance*lm, 'symbol': symbols[index]});
 
+next = now+datetime.timedelta(days=1)
+for hash in output:
+  hash['planet'].compute(next)
+  hash['tomorrow'] = hash['planet'].earth_distance*lm
+
+  if hash['distance'] > hash['tomorrow']:
+    hash['change'] = '↓'
+  else:
+    if hash['distance'] < hash['tomorrow']:
+      hash['change'] = '↑'
+    else:
+      hash['change'] = '='
+
 template_values={ 'planets': output, }
 # template_values={ 'planets': planets, 'lm': lm, }
 
