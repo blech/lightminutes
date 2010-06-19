@@ -16,29 +16,25 @@ neptune = ephem.Neptune(now)
 
 planets = (mercury, venus, mars, jupiter, saturn, uranus, neptune)
 
-c = ephem.c
-au = ephem.meters_per_au
+lm = ephem.meters_per_au/ephem.c/60 # conversion factor from AU to lightminutes
 
-print "Planet distances, in light-minutes"
-
-changes = list()
 order = list()
 
 i = 0
-while (i<104):
-  next = now+datetime.timedelta(days=i*7)
+while (i<365*2):
+  next = now+datetime.timedelta(days=i)
 
   [planet.compute(next) for planet in planets]
-  distances = sorted([(planet.earth_distance, planet) for planet in planets])
+  distances = sorted([(planet.earth_distance*lm, planet) for planet in planets])
 
   new_order = [d[1] for d in distances]
   if order != new_order:
-      print "Ch ch ch changes!"
-      print next.isoformat()
-      print order
+      print "%02i-%02i-%02i" % (next.year, next.month, next.day)
+      
+      for (distance, planet) in distances:
+          print "%s - %.2f" % (planet.name, distance)
 
-#   for (index, planet) in enumerate(planets):
-#     print "%s %s: %.1f" % (index, planet.name, planet.earth_distance*au/c/60)
+      print ""
 
   order = new_order
 
