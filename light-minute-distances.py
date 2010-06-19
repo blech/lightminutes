@@ -20,8 +20,10 @@ lm = ephem.meters_per_au/ephem.c/60 # conversion factor from AU to lightminutes
 
 order = list()
 
+years = 5
+
 i = 0
-while (i<365*2):
+while (i<365*years):
   next = now+datetime.timedelta(days=i)
 
   [planet.compute(next) for planet in planets]
