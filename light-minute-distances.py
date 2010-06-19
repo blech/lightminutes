@@ -5,17 +5,12 @@ import datetime
 
 now = datetime.datetime.now()
 
-mercury = ephem.Mercury(now)
-venus = ephem.Venus(now)
-#earth = ephem.Earth(now)
-mars = ephem.Mars(now)
-jupiter = ephem.Jupiter(now)
-saturn = ephem.Saturn(now)
-uranus = ephem.Uranus(now)
-neptune = ephem.Neptune(now)
+planets = list(("Mercury", "Venus", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"))
 
-planets = (mercury, venus, mars, jupiter, saturn, uranus, neptune)
-
+# convert name to object
+for (index, name) in enumerate(planets):
+    planets[index] = getattr(ephem, name)()
+    
 lm = ephem.meters_per_au/ephem.c/60 # conversion factor from AU to lightminutes
 
 order = list()
@@ -33,7 +28,7 @@ while (i<365*years):
   if order != new_order:
       print "%02i-%02i-%02i" % (next.year, next.month, next.day)
       
-      for (distance, planet) in distances:
+      for (distance, planet) in distances[:3]:
           print "%s - %.2f" % (planet.name, distance)
 
       print ""
