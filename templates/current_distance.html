@@ -1,6 +1,7 @@
 <html>
 <head>
   <title>planetary distances (in light minutes)</title>
+<meta name="viewport" content="width = 320">
 <style type="text/css">
   body {
     color: #000000;
@@ -23,6 +24,11 @@
     margin-top: 0;
   }
 
+  div#content {
+    width: 320px;
+    margin: 0px auto;
+  }
+  
   p {
     font-face: helvetica;
     font-weight: 100;
@@ -50,14 +56,17 @@
 </head>
 <body>
 
-<h1>current planetary distances from earth</h1>
-<h2>(in light minutes)</h2>
-
-{% for planet in planets %}
-  <p>
-    <span class="symbol">{{ planet.symbol}}<span class="change">{{ planet.change }}</span></span>
-    {{ planet.distance|round(2) }}
-  </p>
-{% endfor %}
+  <div id="content">    
+    <h1>current planetary distances from earth</h1>
+    <h2>(in light minutes)</h2>
+    
+    {% for planet in planets %}
+      <p>
+        <span class="symbol">{{ planet.symbol}}<span class="change">{{ planet.change }}</span></span>
+        {{ planet.distance|round(2) }}
+      </p>
+    {% endfor %}
+  </div>
+  
 </body>
 </html>
