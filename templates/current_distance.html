@@ -1,15 +1,16 @@
 <html>
 <head>
   <title>planetary distances (in light minutes)</title>
-<meta name="viewport" content="width = 320">
+<meta name="viewport" content="user-scalable=no, width=320">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 <style type="text/css">
   body {
     color: #000000;
     background-color: #fffffe;
+    font-family: "helvetica neue", helvetica, arial, san-serif;
   }
 
   h1 {
-    font-face: "helvetica neue", helvetica, arial, san-serif;
     font-weight: 400;
     font-height: 32px;
     line-height: 32px;
@@ -17,7 +18,6 @@
   }
 
   h2 {
-    font-face: "helvetica neue", helvetica, arial, san-serif;
     font-weight: 400;
     font-height: 20px;
     line-height: 24px;
@@ -30,7 +30,6 @@
   }
   
   p {
-    font-face: helvetica;
     font-weight: 100;
     font-size: 48px;
     line-height: 48px;
@@ -42,7 +41,10 @@
   }
   
   p span.symbol {
-    padding-right: 10px;
+    display: block;
+    width: 66px;
+    float: left;
+    margin-right: 10px;
     border-right: 1px solid black;
   }
 
@@ -61,8 +63,8 @@
     <h2>(in light minutes)</h2>
     
     {% for planet in planets %}
-      <p>
-        <span class="symbol">{{ planet.symbol}}<span class="change">{{ planet.change }}</span></span>
+      <p title="{{ planet.planet.name }} is {{ planet.distance|round(2) }} light minutes from earth and getting {{ planet.change_text }}.">
+        <span class="symbol">{{ planet.symbol}}<span class="change">{{ planet.change_symbol }}</span></span>
         {{ planet.distance|round(2) }}
       </p>
     {% endfor %}

@@ -38,12 +38,15 @@ for hash in output:
   hash['tomorrow'] = hash['planet'].earth_distance*lm
 
   if hash['distance'] > hash['tomorrow']:
-    hash['change'] = '↓'
+    hash['change_symbol'] = '↓'
+    hash['change_text'] = 'nearer'
   else:
     if hash['distance'] < hash['tomorrow']:
-      hash['change'] = '↑'
+      hash['change_symbol'] = '↑'
+      hash['change_text'] = 'more distant'
     else:
-      hash['change'] = '='
+      hash['change_symbol'] = '='
+      hash['change_text'] = 'neither nearer nor more distant'
 
 template_values={ 'planets': output, }
 # template_values={ 'planets': planets, 'lm': lm, }
