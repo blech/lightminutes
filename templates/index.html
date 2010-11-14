@@ -1,0 +1,136 @@
+<html>
+<head>
+  <title>light minutes (to the planets). husk.org.</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <style type="text/css">
+    body {
+      color: #000000;
+      background-color: #fffffe;
+      font-family: "helvetica neue", helvetica, arial, san-serif;
+    }
+  
+    h1 {
+      font-weight: 400;
+      font-height: 32px;
+      line-height: 32px;
+      margin: 0;
+    }
+    
+    h1.float {
+      float: left;
+      padding-right: 8px;
+    }
+  
+    h2 {
+      font-weight: 400;
+      font-height: 20px;
+      line-height: 24px;
+      margin-top: 0;
+    }
+
+    h2.float {
+      padding-top: 6px;
+      color: #666;
+    }
+  
+    div#content {
+      width: 900px;
+      margin: 0px auto;
+    }
+    
+    p {
+      font-weight: 100;
+      font-size: 24px;
+      line-height: 28px;
+/*
+      margin: 0;
+*/
+    }
+    
+/*
+    p:hover {
+      color: #393;
+    }
+*/
+    
+    p span.symbol {
+      display: block;
+      width: 64px;
+      height: 48px;
+      float: left;
+      margin-right: 10px;
+      border-right: 1px solid black;
+    }
+  
+    p span.change {
+      font-size: 16px;
+      line-height: 16px;
+      vertical-align: baseline;
+    }
+    
+    p.caption {
+      margin-top: 0px;
+      font-size: 12px;
+      font-weight: 300;
+    }
+
+    ol {
+      padding:0; 
+      margin:0; 
+    }
+
+    ol li {
+      font-weight: 100;
+      font-size: 24px;
+      line-height: 28px;
+      margin: 0;
+      list-style-type:none;
+    }
+
+  </style>
+
+  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart", "table"]});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = new google.visualization.DataTable();
+      
+      data.addColumn('string', "Date");
+    {% for planet in chart_list %}
+      data.addColumn('number', '{{ planet.name }}');
+    {% endfor %}
+
+      data.addRows({{ chart_data }});
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(data, {width: 900, height: 128, chartArea: {left: 0, top: 0, width:'100%', height:'100%'}, smoothLine: false, pointSize: 0, axisColor: 'red', lineWidth: 1, axisTitlesPosition: "none", vAxis: {textPosition: "none", showTextEvery:150}, hAxis: {textPosition: "none", showTextEvery:150}, legend: "none"});
+    }
+  </script>
+<body>
+
+  <div id="content">    
+    <h1 class="float">light minutes</h1>
+    
+    <h2 class="float">distances to the planets</h2>
+    
+    <p>As a child, everyone learns the order of the planets, based on their distance from the Sun.</p>
+    
+    <p>The thing is, we're not on the Sun. We're on Earth, and while we know the planets don't orbit around us, the distance to the nearest planets changes as both bodies orbit the Sun.</p>
+  
+    <p>At the moment, the closest planet to the Earth is {{ by_distance[0]['planet'].name }}, <span title="{{ by_distance[0]['km'] }} kilometres">{{ by_distance[0]['distance']|round(2) }} light minutes</span> away, followed by {{ by_distance[1]['planet'].name }} at a distance of <span title="{{ by_distance[1]['km'] }} kilometres">{{ by_distance[1]['distance']|round(2) }} light minutes</span> and {{ by_distance[2]['planet'].name }}, <span title="{{ by_distance[2]['km'] }} kilometres">{{ by_distance[2]['distance']|round(2) }} light minutes</span> away.</p>
+
+    <div id="chart_div" style="width:900; height:128; background-color:#eee;"></div>
+
+    <p class="caption">The change in distance of the nearest planets from two months ago to three years in the future.</p>
+
+    <p>The next three changes will be:</p>
+    
+    <ol>
+  {% for change in changes %}
+      <li>On {{ change.date }} to {{ change.planets.0.1.name }}, {{ change.planets.1.1.name }}, and {{ change.planets.2.1.name }}.</li>
+  {% endfor %}
+    </ol>
+  </div>
+</body>
