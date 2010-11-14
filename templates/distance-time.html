@@ -1,0 +1,86 @@
+<html>
+<head>
+  <title>light minutes (to the planets). husk.org.</title>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <style type="text/css">
+    body {
+      color: #000000;
+      background-color: #fffffe;
+      font-family: "helvetica neue", helvetica, arial, san-serif;
+    }
+  
+    h1 {
+      font-weight: 400;
+      font-height: 32px;
+      line-height: 32px;
+      margin: 0;
+    }
+  
+    h2 {
+      font-weight: 400;
+      font-height: 20px;
+      line-height: 24px;
+      margin-top: 0;
+    }
+  
+    div#content {
+      width: 900px;
+      margin: 0px auto;
+    }
+    
+    p {
+      font-weight: 100;
+      font-size: 48px;
+      line-height: 48px;
+      margin: 0;
+    }
+    
+    p:hover {
+      color: #393;
+    }
+    
+    p span.symbol {
+      display: block;
+      width: 64px;
+      height: 48px;
+      float: left;
+      margin-right: 10px;
+      border-right: 1px solid black;
+    }
+  
+    p span.change {
+      font-size: 16px;
+      line-height: 16px;
+      vertical-align: baseline;
+    }
+  
+  </style>
+
+  <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+  <script type="text/javascript">
+    google.load("visualization", "1", {packages:["corechart", "table"]});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = new google.visualization.DataTable();
+      
+      data.addColumn('string', "Date");
+      data.addColumn('number', "Sun");
+      data.addColumn('number', "Mercury");
+      data.addColumn('number', "Venus");
+      data.addColumn('number', "Mars");
+
+      data.addRows({{ chart_data }});
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+      chart.draw(data, {width: 900, height: 512, chartArea: {left: 64, top: 10, width:'80%', height:'45%'}, smoothLine: false, pointSize: 0, axisColor: 'red', lineWidth: 1});
+    }
+  </script>
+<body>
+
+  <div id="content">    
+    <div id="chart_div" style="width:900; height:512; background-color:#eee;">
+    </div>
+
+  </div>
+</body>
